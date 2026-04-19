@@ -1,0 +1,254 @@
+/* RESET + BASE */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Roboto', sans-serif;
+}
+
+body {
+    background-color: #f9f9f9;
+    color: #1a1a1a;
+    line-height: 1.5;
+    width: 100%;
+    padding: 1rem;
+    transition: background 0.3s, color 0.3s;
+}
+
+/* LAYOUT COLUMNS */
+.layout {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap; /* allow wrapping */
+}
+
+.left-column {
+    flex: 2 1 600px; /* flexible but min width 300px */
+    min-width: 300px;
+}
+
+.right-column {
+    flex: 1 1 300px;
+    min-width: 250px;
+    position: sticky;
+    top: 20px;
+    height: fit-content;
+}
+
+/* SIDE CARD */
+.side-card {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    width: 100%;
+    transition: background 0.3s, color 0.3s;
+}
+
+/* MINI SECTIONS INSIDE SIDE CARD */
+.side-card .mini-sec {
+    padding: 10px 0;
+}
+
+.side-card .mini-sec h2 {
+    border-bottom: none;
+    margin-bottom: 0.8rem;
+    font-size: 1.2rem;
+}
+
+/* SKILLS */
+.side-card .skill-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    width: 100%;
+}
+
+.side-card .skill-list .skill {
+    flex: 0 0 auto;        /* don’t stretch */
+    padding: 0.4rem 0.8rem;
+    font-size: 0.85rem;
+    border-radius: 10px;
+}
+
+/* HEADER PROFILE */
+header .profile {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid #ccc;
+}
+
+.profile-pic {
+    width: 120px;
+    height: 120px;
+    border-radius: 12px;
+    object-fit: cover;
+    border: 2px solid #ccc;
+}
+
+.profile-info {
+    flex: 1 1 300px;
+    margin-left: 1rem;
+}
+
+.profile-info h1 {
+    font-size: 1.6rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.verified { color: #1da1f2; }
+
+.profile-info p { margin-top: 0.4rem; font-size: 1rem; color: #555; }
+
+.buttons {
+    margin-top: 1rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+button {
+    cursor: pointer;
+    border: none;
+    border-radius: 20px;
+    padding: 0.5rem 1rem;
+    font-size: 0.9rem;
+    transition: 0.3s;
+}
+
+/* BUTTON COLORS */
+#downloadResume { background-color: #1da1f2; color: #fff; }
+#downloadResume:hover { background-color: #0d8ddb; }
+#sendEmail, #callMe { background-color: #eee; color: #1a1a1a; }
+#sendEmail:hover, #callMe:hover { background-color: #ddd; }
+.mode-btn { background-color: #1da1f2; color: white; }
+
+/* SECTIONS */
+section {
+    padding: 30px 20px;
+    margin-top: 20px;
+    border-radius: 10px;
+    background-color: #fff;
+    box-shadow: 0 6px 15px rgba(0,0,0,0.05);
+    transition: background 0.3s, color 0.3s;
+    opacity: 0;
+    transform: translateY(20px);
+    animation: fadeSlideUp 0.8s forwards;
+}
+
+@keyframes fadeSlideUp { to { opacity: 1; transform: translateY(0); } }
+
+h2 {
+    border-bottom: 2px solid #ccc;
+    padding-bottom: 0.3rem;
+    margin-bottom: 1.2rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 1.3rem;
+}
+
+.icon { font-size: 1.3rem; }
+
+/* PROJECTS */
+.project-gallery {
+    display: flex;
+    gap: 20px;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    padding-bottom: 20px;
+}
+.project-card {
+    flex: 0 0 auto;
+    width: 260px;
+    background-color: #fff;
+    border-radius: 12px;
+    padding: 10px;
+    scroll-snap-align: start;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+}
+.project-card img { width: 100%; height: 160px; object-fit: cover; border-radius: 10px; }
+
+/* CERTIFICATES SMALLER & CLICKABLE */
+.certificate-gallery {
+    display: flex;
+    gap: 10px;
+    overflow-x: auto;
+    padding-bottom: 20px;
+    cursor: pointer; /* show clickable */
+}
+
+.certificate-card {
+    flex: 0 0 auto;
+    width: 120px; /* smaller width */
+    height: 80px;  /* smaller height */
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.certificate-card img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 8px;
+}
+
+.certificate-card:hover {
+    transform: scale(1.05);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+}
+
+/* LIGHTBOX */
+#certLightbox {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background-color: rgba(0,0,0,0.8);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+}
+
+#certLightbox img {
+    max-width: 90%;
+    max-height: 90%;
+    border-radius: 10px;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+}
+
+#certLightbox:active {
+    display: none;
+}
+
+.certificate-card img { width: 100%; height: 140px; object-fit: cover; border-radius: 10px; }
+
+/* PHOTO ALBUM */
+.album-container { display: flex; gap: 15px; flex-wrap: wrap; justify-content: center; }
+.album-container img { width: 220px; height: 160px; object-fit: cover; border-radius: 10px; transition: 0.3s; }
+.album-container img:hover { transform: scale(1.05); }
+
+/* FOOTER */
+footer { text-align: center; padding: 1rem 0; margin-top: 20px; color: #555; }
+
+/* DARK MODE */
+body.dark-mode { background-color: #1a1a1a; color: #f0f0f0; }
+body.dark-mode section, body.dark-mode .side-card { background-color: #222; color: #f0f0f0; }
+body.dark-mode .profile-info p { color: #ccc; }
+body.dark-mode .project-card, body.dark-mode .certificate-card { background-color: #333; color: #f0f0f0; }
+body.dark-mode footer { color: #ccc; }
+
+/* RESPONSIVE */
+@media (max-width: 1024px) { .layout { flex-direction: column; gap: 30px; } .right-column { position: relative; top: 0; } }
+@media (max-width: 768px) { .project-card { width: 200px; } .project-card img { height: 130px; } .certificate-card { width: 160px; } .certificate-card img { height: 100px; } .album-container img { width: 160px; height: 120px; } }
+@media (max-width: 480px) { .project-card { width: 140px; } .project-card img { height: 90px; } .certificate-card { width: 120px; } .certificate-card img { height: 80px; } .album-container img { width: 120px; height: 80px; } }
