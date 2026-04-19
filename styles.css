@@ -4,6 +4,7 @@
     padding: 0;
     box-sizing: border-box;
     font-family: 'Roboto', sans-serif;
+    -webkit-tap-highlight-color: transparent; /* Remove tap highlight on mobile */
 }
 
 body {
@@ -11,39 +12,52 @@ body {
     color: #1a1a1a;
     line-height: 1.5;
     width: 100%;
-    padding: 1rem;
+    padding: clamp(0.5rem, 2vw, 1.5rem);
     transition: background 0.3s, color 0.3s;
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased; /* Better font rendering on iOS */
+    -moz-osx-font-smoothing: grayscale;
 }
 
 /* LAYOUT COLUMNS */
 .layout {
     display: flex;
-    gap: 20px;
-    flex-wrap: wrap; /* allow wrapping */
+    gap: clamp(15px, 3vw, 30px);
+    flex-wrap: wrap;
+    max-width: 1400px;
+    margin: 0 auto;
 }
 
 .left-column {
-    flex: 2 1 600px; /* flexible but min width 300px */
-    min-width: 300px;
+    flex: 2 1 500px;
+    min-width: 280px;
 }
 
 .right-column {
     flex: 1 1 300px;
-    min-width: 250px;
+    min-width: 260px;
     position: sticky;
     top: 20px;
     height: fit-content;
 }
 
+/* Responsive sticky behavior */
+@media (max-width: 1024px) {
+    .right-column {
+        position: static;
+        top: 0;
+    }
+}
+
 /* SIDE CARD */
 .side-card {
     background-color: #fff;
-    padding: 20px;
-    border-radius: 12px;
+    padding: clamp(15px, 3vw, 25px);
+    border-radius: clamp(10px, 2vw, 16px);
     box-shadow: 0 6px 20px rgba(0,0,0,0.08);
     display: flex;
     flex-direction: column;
-    gap: 20px;
+    gap: clamp(15px, 2vw, 25px);
     width: 100%;
     transition: background 0.3s, color 0.3s;
 }
@@ -56,7 +70,42 @@ body {
 .side-card .mini-sec h2 {
     border-bottom: none;
     margin-bottom: 0.8rem;
-    font-size: 1.2rem;
+    font-size: clamp(1rem, 3vw, 1.2rem);
+}
+
+/* EDUCATION SECTION STYLES */
+.education-item {
+    margin-bottom: 1.5rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid #eee;
+}
+
+.education-item:last-child {
+    margin-bottom: 0;
+    padding-bottom: 0;
+    border-bottom: none;
+}
+
+.education-item strong {
+    font-size: 1rem;
+    display: inline-block;
+    margin-bottom: 0.25rem;
+}
+
+.education-item small {
+    font-size: 0.85rem;
+    color: #666;
+    display: inline-block;
+    line-height: 1.4;
+}
+
+/* Dark mode support for education */
+body.dark-mode .education-item {
+    border-bottom-color: #444;
+}
+
+body.dark-mode .education-item small {
+    color: #aaa;
 }
 
 /* SKILLS */
@@ -68,45 +117,68 @@ body {
 }
 
 .side-card .skill-list .skill {
-    flex: 0 0 auto;        /* don’t stretch */
+    flex: 0 0 auto;
     padding: 0.4rem 0.8rem;
-    font-size: 0.85rem;
+    font-size: clamp(0.75rem, 2.5vw, 0.85rem);
     border-radius: 10px;
 }
 
+/* Skill colors */
+.skill.html { background: #e44d26; color: white; }
+.skill.css { background: #264de4; color: white; }
+.skill.js { background: #f7df1e; color: #1a1a1a; }
+.skill.figma { background: #a259ff; color: white; }
+.skill.ps { background: #2ecc71; color: white; }
+.skill.team { background: #3498db; color: white; }
+.skill.uiux { background: #e67e22; color: white; }
+
 /* HEADER PROFILE */
+header {
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
 header .profile {
     display: flex;
     flex-wrap: wrap;
     align-items: center;
     justify-content: space-between;
+    gap: 1rem;
     padding-bottom: 1rem;
     border-bottom: 1px solid #ccc;
 }
 
 .profile-pic {
-    width: 120px;
-    height: 120px;
+    width: clamp(80px, 15vw, 120px);
+    height: clamp(80px, 15vw, 120px);
     border-radius: 12px;
     object-fit: cover;
     border: 2px solid #ccc;
 }
 
 .profile-info {
-    flex: 1 1 300px;
-    margin-left: 1rem;
+    flex: 1 1 200px;
+    margin-left: clamp(0.5rem, 2vw, 1rem);
 }
 
 .profile-info h1 {
-    font-size: 1.6rem;
+    font-size: clamp(1.2rem, 5vw, 1.6rem);
     display: flex;
     align-items: center;
+    flex-wrap: wrap;
     gap: 0.5rem;
 }
 
-.verified { color: #1da1f2; }
+.verified { 
+    color: #1da1f2;
+    font-size: clamp(0.9rem, 3vw, 1rem);
+}
 
-.profile-info p { margin-top: 0.4rem; font-size: 1rem; color: #555; }
+.profile-info p { 
+    margin-top: 0.4rem; 
+    font-size: clamp(0.85rem, 2.5vw, 1rem); 
+    color: #555; 
+}
 
 .buttons {
     margin-top: 1rem;
@@ -120,31 +192,52 @@ button {
     border: none;
     border-radius: 20px;
     padding: 0.5rem 1rem;
-    font-size: 0.9rem;
+    font-size: clamp(0.8rem, 2.5vw, 0.9rem);
     transition: 0.3s;
+    -webkit-appearance: none; /* Remove default button styling on iOS */
 }
 
 /* BUTTON COLORS */
 #downloadResume { background-color: #1da1f2; color: #fff; }
-#downloadResume:hover { background-color: #0d8ddb; }
+#downloadResume:hover { background-color: #0d8ddb; transform: translateY(-2px); }
 #sendEmail, #callMe { background-color: #eee; color: #1a1a1a; }
-#sendEmail:hover, #callMe:hover { background-color: #ddd; }
-.mode-btn { background-color: #1da1f2; color: white; }
+#sendEmail:hover, #callMe:hover { 
+    background-color: #ddd; 
+    transform: translateY(-2px);
+}
+.mode-btn { 
+    background-color: #1da1f2; 
+    color: white;
+}
+
+.mode-btn:hover {
+    transform: translateY(-2px);
+}
 
 /* SECTIONS */
 section {
-    padding: 30px 20px;
+    padding: clamp(20px, 4vw, 30px) clamp(15px, 3vw, 20px);
     margin-top: 20px;
-    border-radius: 10px;
+    border-radius: clamp(8px, 2vw, 12px);
     background-color: #fff;
     box-shadow: 0 6px 15px rgba(0,0,0,0.05);
-    transition: background 0.3s, color 0.3s;
+    transition: background 0.3s, color 0.3s, transform 0.3s;
     opacity: 0;
     transform: translateY(20px);
     animation: fadeSlideUp 0.8s forwards;
 }
 
-@keyframes fadeSlideUp { to { opacity: 1; transform: translateY(0); } }
+section:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 25px rgba(0,0,0,0.1);
+}
+
+@keyframes fadeSlideUp { 
+    to { 
+        opacity: 1; 
+        transform: translateY(0); 
+    } 
+}
 
 h2 {
     border-bottom: 2px solid #ccc;
@@ -153,29 +246,75 @@ h2 {
     display: flex;
     align-items: center;
     gap: 0.5rem;
-    font-size: 1.3rem;
+    font-size: clamp(1.1rem, 4vw, 1.3rem);
 }
 
-.icon { font-size: 1.3rem; }
+.icon { 
+    font-size: clamp(1.1rem, 4vw, 1.3rem); 
+}
 
 /* PROJECTS */
 .project-gallery {
     display: flex;
-    gap: 20px;
+    gap: clamp(15px, 3vw, 20px);
     overflow-x: auto;
     scroll-snap-type: x mandatory;
     padding-bottom: 20px;
+    scrollbar-width: thin;
+    -webkit-overflow-scrolling: touch; /* Smooth scrolling on iOS */
 }
+
+.project-gallery::-webkit-scrollbar {
+    height: 8px;
+}
+
+.project-gallery::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 10px;
+}
+
+.project-gallery::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 10px;
+}
+
 .project-card {
     flex: 0 0 auto;
-    width: 260px;
+    width: clamp(200px, 40vw, 260px);
     background-color: #fff;
     border-radius: 12px;
     padding: 10px;
     scroll-snap-align: start;
     box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+    transition: transform 0.3s, box-shadow 0.3s;
 }
-.project-card img { width: 100%; height: 160px; object-fit: cover; border-radius: 10px; }
+
+.project-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 30px rgba(0,0,0,0.15);
+}
+
+.project-card img { 
+    width: 100%; 
+    height: clamp(120px, 25vw, 160px); 
+    object-fit: cover; 
+    border-radius: 10px; 
+}
+
+.project-card h3 {
+    margin: 10px 0;
+    font-size: clamp(0.9rem, 3vw, 1rem);
+}
+
+.project-card p a {
+    color: #1da1f2;
+    text-decoration: none;
+    font-size: clamp(0.8rem, 2.5vw, 0.9rem);
+}
+
+.project-card p a:hover {
+    text-decoration: underline;
+}
 
 /* CERTIFICATES SMALLER & CLICKABLE */
 .certificate-gallery {
@@ -183,13 +322,15 @@ h2 {
     gap: 10px;
     overflow-x: auto;
     padding-bottom: 20px;
-    cursor: pointer; /* show clickable */
+    cursor: pointer;
+    scrollbar-width: thin;
+    -webkit-overflow-scrolling: touch; /* Smooth scrolling on iOS */
 }
 
 .certificate-card {
     flex: 0 0 auto;
-    width: 120px; /* smaller width */
-    height: 80px;  /* smaller height */
+    width: clamp(100px, 20vw, 120px);
+    height: clamp(70px, 15vw, 80px);
     border-radius: 8px;
     overflow: hidden;
     box-shadow: 0 4px 12px rgba(0,0,0,0.1);
@@ -211,44 +352,493 @@ h2 {
 /* LIGHTBOX */
 #certLightbox {
     position: fixed;
-    top: 0; left: 0;
-    width: 100%; height: 100%;
-    background-color: rgba(0,0,0,0.8);
+    top: 0; 
+    left: 0;
+    width: 100%; 
+    height: 100%;
+    background-color: rgba(0,0,0,0.9);
     display: none;
     justify-content: center;
     align-items: center;
     z-index: 9999;
+    cursor: pointer;
 }
 
 #certLightbox img {
     max-width: 90%;
     max-height: 90%;
+    width: auto;
+    height: auto;
     border-radius: 10px;
     box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+    animation: zoomIn 0.3s ease;
 }
 
-#certLightbox:active {
-    display: none;
+@keyframes zoomIn {
+    from {
+        transform: scale(0.8);
+        opacity: 0;
+    }
+    to {
+        transform: scale(1);
+        opacity: 1;
+    }
 }
 
-.certificate-card img { width: 100%; height: 140px; object-fit: cover; border-radius: 10px; }
+#closeLightbox {
+    position: absolute;
+    top: 20px;
+    right: 40px;
+    color: white;
+    font-size: 40px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+#closeLightbox:hover {
+    color: #1da1f2;
+    transform: scale(1.1);
+}
 
 /* PHOTO ALBUM */
-.album-container { display: flex; gap: 15px; flex-wrap: wrap; justify-content: center; }
-.album-container img { width: 220px; height: 160px; object-fit: cover; border-radius: 10px; transition: 0.3s; }
-.album-container img:hover { transform: scale(1.05); }
+.album-container { 
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: clamp(10px, 2vw, 15px);
+    justify-content: center;
+}
+
+.album-container img { 
+    width: 100%;
+    height: clamp(120px, 25vw, 160px);
+    object-fit: cover; 
+    border-radius: 10px; 
+    transition: transform 0.3s, box-shadow 0.3s;
+    cursor: pointer;
+}
+
+.album-container img:hover { 
+    transform: scale(1.05);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+}
 
 /* FOOTER */
-footer { text-align: center; padding: 1rem 0; margin-top: 20px; color: #555; }
+footer { 
+    text-align: center; 
+    padding: 1rem 0; 
+    margin-top: 20px; 
+    color: #555;
+    font-size: clamp(0.75rem, 2vw, 0.9rem);
+}
 
 /* DARK MODE */
-body.dark-mode { background-color: #1a1a1a; color: #f0f0f0; }
-body.dark-mode section, body.dark-mode .side-card { background-color: #222; color: #f0f0f0; }
-body.dark-mode .profile-info p { color: #ccc; }
-body.dark-mode .project-card, body.dark-mode .certificate-card { background-color: #333; color: #f0f0f0; }
-body.dark-mode footer { color: #ccc; }
+body.dark-mode { 
+    background-color: #1a1a1a; 
+    color: #f0f0f0; 
+}
 
-/* RESPONSIVE */
-@media (max-width: 1024px) { .layout { flex-direction: column; gap: 30px; } .right-column { position: relative; top: 0; } }
-@media (max-width: 768px) { .project-card { width: 200px; } .project-card img { height: 130px; } .certificate-card { width: 160px; } .certificate-card img { height: 100px; } .album-container img { width: 160px; height: 120px; } }
-@media (max-width: 480px) { .project-card { width: 140px; } .project-card img { height: 90px; } .certificate-card { width: 120px; } .certificate-card img { height: 80px; } .album-container img { width: 120px; height: 80px; } }
+body.dark-mode section, 
+body.dark-mode .side-card { 
+    background-color: #222; 
+    color: #f0f0f0; 
+}
+
+body.dark-mode .profile-info p { 
+    color: #ccc; 
+}
+
+body.dark-mode .project-card, 
+body.dark-mode .certificate-card { 
+    background-color: #333; 
+    color: #f0f0f0; 
+}
+
+body.dark-mode .project-card p a {
+    color: #4db8ff;
+}
+
+body.dark-mode footer { 
+    color: #ccc; 
+}
+
+body.dark-mode .skill.html { background: #e44d26; }
+body.dark-mode .skill.css { background: #264de4; }
+body.dark-mode .skill.js { background: #f7df1e; color: #1a1a1a; }
+body.dark-mode .skill.figma { background: #a259ff; }
+body.dark-mode .skill.ps { background: #2ecc71; }
+body.dark-mode .skill.team { background: #3498db; }
+body.dark-mode .skill.uiux { background: #e67e22; }
+
+body.dark-mode .project-gallery::-webkit-scrollbar-track {
+    background: #333;
+}
+
+body.dark-mode .project-gallery::-webkit-scrollbar-thumb {
+    background: #666;
+}
+
+/* ============================================ */
+/* ENHANCED MOBILE RESPONSIVENESS */
+/* Android & iPhone Optimizations */
+/* ============================================ */
+
+/* iPhone SE, iPhone 5/5S/5C, older Android (320px - 375px) */
+@media (max-width: 375px) {
+    body {
+        padding: 0.75rem;
+    }
+    
+    .profile-pic {
+        width: 70px;
+        height: 70px;
+    }
+    
+    .profile-info h1 {
+        font-size: 1.2rem;
+    }
+    
+    .buttons {
+        flex-direction: column;
+        width: 100%;
+    }
+    
+    .buttons button {
+        width: 100%;
+        padding: 0.6rem;
+    }
+    
+    .project-card {
+        width: 160px;
+    }
+    
+    .project-card img {
+        height: 110px;
+    }
+    
+    .album-container {
+        grid-template-columns: 1fr;
+        gap: 12px;
+    }
+    
+    .album-container img {
+        height: 200px;
+    }
+    
+    .side-card .skill-list .skill {
+        font-size: 0.7rem;
+        padding: 0.3rem 0.6rem;
+    }
+    
+    section {
+        padding: 20px 15px;
+    }
+    
+    h2 {
+        font-size: 1.1rem;
+    }
+    
+    .education-item strong {
+        font-size: 0.9rem;
+    }
+    
+    .education-item small {
+        font-size: 0.75rem;
+    }
+}
+
+/* iPhone 6/7/8, iPhone X, Android medium (375px - 414px) */
+@media (min-width: 376px) and (max-width: 414px) {
+    .profile-pic {
+        width: 80px;
+        height: 80px;
+    }
+    
+    .buttons {
+        flex-wrap: wrap;
+    }
+    
+    .buttons button {
+        flex: 1;
+        min-width: 100px;
+    }
+    
+    .project-card {
+        width: 180px;
+    }
+    
+    .album-container {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .album-container img {
+        height: 150px;
+    }
+}
+
+/* iPhone 12/13/14/15 Pro Max, Plus models, Android large (414px - 480px) */
+@media (min-width: 415px) and (max-width: 480px) {
+    .project-card {
+        width: 200px;
+    }
+    
+    .album-container {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .album-container img {
+        height: 160px;
+    }
+    
+    .buttons button {
+        padding: 0.6rem 1rem;
+    }
+}
+
+/* Small Android phones in landscape mode */
+@media (max-width: 768px) and (orientation: landscape) {
+    header .profile {
+        flex-direction: row;
+        text-align: left;
+    }
+    
+    .profile-info {
+        text-align: left;
+        margin-left: 1rem;
+    }
+    
+    .buttons {
+        justify-content: flex-start;
+    }
+    
+    .project-gallery {
+        gap: 15px;
+    }
+    
+    .project-card {
+        width: 200px;
+    }
+    
+    .album-container {
+        grid-template-columns: repeat(3, 1fr);
+    }
+    
+    .album-container img {
+        height: 120px;
+    }
+}
+
+/* Touch-friendly improvements for all mobile devices */
+@media (max-width: 768px) {
+    button, 
+    .project-card,
+    .certificate-card,
+    .album-container img,
+    .skill {
+        cursor: pointer;
+        -webkit-tap-highlight-color: transparent;
+    }
+    
+    button:active,
+    .project-card:active,
+    .certificate-card:active {
+        transform: scale(0.98);
+    }
+    
+    /* Increase touch targets */
+    button {
+        min-height: 44px; /* Apple's recommended minimum touch target */
+    }
+    
+    .project-card p a {
+        display: inline-block;
+        padding: 8px 0;
+    }
+    
+    /* Improve scroll experience */
+    .project-gallery,
+    .certificate-gallery {
+        scroll-snap-type: x mandatory;
+        padding-bottom: 15px;
+    }
+    
+    /* Better form elements for mobile */
+    input, 
+    textarea, 
+    select {
+        font-size: 16px; /* Prevents zoom on focus in iOS */
+    }
+}
+
+/* iPhone specific notch and dynamic island handling */
+@supports (padding: max(0px)) {
+    body {
+        padding-left: max(0.5rem, env(safe-area-inset-left));
+        padding-right: max(0.5rem, env(safe-area-inset-right));
+        padding-top: max(0.5rem, env(safe-area-inset-top));
+        padding-bottom: max(0.5rem, env(safe-area-inset-bottom));
+    }
+}
+
+/* Prevent text size adjustment on orientation change */
+html {
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+}
+
+/* RESPONSIVE BREAKPOINTS */
+/* Large screens (desktops) */
+@media (min-width: 1400px) {
+    .layout, header {
+        max-width: 1400px;
+        margin: 0 auto;
+    }
+}
+
+/* Medium screens (tablets) */
+@media (max-width: 1024px) {
+    .layout {
+        flex-direction: column;
+        gap: 30px;
+    }
+    
+    .right-column {
+        position: relative;
+        top: 0;
+    }
+    
+    .album-container {
+        grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    }
+}
+
+/* Small tablets (portrait) */
+@media (max-width: 768px) {
+    header .profile {
+        flex-direction: column;
+        text-align: center;
+    }
+    
+    .profile-info {
+        margin-left: 0;
+        text-align: center;
+    }
+    
+    .buttons {
+        justify-content: center;
+    }
+    
+    .project-card {
+        width: 220px;
+    }
+    
+    .album-container {
+        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    }
+    
+    .album-container img {
+        height: 130px;
+    }
+    
+    .mode-btn {
+        margin-top: 10px;
+    }
+}
+
+/* Mobile phones */
+@media (max-width: 480px) {
+    body {
+        padding: 0.5rem;
+    }
+    
+    .project-card {
+        width: 180px;
+    }
+    
+    .project-card img {
+        height: 120px;
+    }
+    
+    .album-container {
+        grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+    }
+    
+    .album-container img {
+        height: 100px;
+    }
+    
+    .certificate-card {
+        width: 100px;
+        height: 70px;
+    }
+    
+    .side-card .skill-list .skill {
+        font-size: 0.7rem;
+        padding: 0.3rem 0.6rem;
+    }
+    
+    button {
+        padding: 0.4rem 0.8rem;
+        font-size: 0.75rem;
+    }
+    
+    h2 {
+        font-size: 1rem;
+    }
+    
+    .profile-info h1 {
+        font-size: 1.1rem;
+    }
+    
+    #closeLightbox {
+        top: 10px;
+        right: 20px;
+        font-size: 30px;
+    }
+}
+
+/* Very small phones */
+@media (max-width: 360px) {
+    .project-card {
+        width: 150px;
+    }
+    
+    .project-card img {
+        height: 100px;
+    }
+    
+    .album-container {
+        grid-template-columns: 1fr;
+    }
+    
+    .album-container img {
+        height: 180px;
+    }
+    
+    .buttons {
+        flex-direction: column;
+        width: 100%;
+    }
+    
+    .buttons button {
+        width: 100%;
+    }
+}
+
+/* Print styles */
+@media print {
+    .mode-btn, .buttons, #certLightbox, .certificate-gallery {
+        display: none;
+    }
+    
+    body {
+        background: white;
+        color: black;
+        padding: 0;
+    }
+    
+    section, .side-card {
+        box-shadow: none;
+        border: 1px solid #ddd;
+    }
+}
